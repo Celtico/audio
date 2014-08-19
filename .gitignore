@@ -1,8 +1,3 @@
 
-.idea/workspace.xml
-
-.idea/scopes/scope_settings.xml
-
-.idea/misc.xml
-
-.idea/dictionaries/cel.xml
+.idea
+.gitignore
