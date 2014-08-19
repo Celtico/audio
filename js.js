@@ -27,6 +27,8 @@ if(screenWidth < 700){
     canvasVideo.setAttribute('height','180');
     waveCanvas.setAttribute('width','280');
     waveCanvas.setAttribute('height','130');
+    canvas2.setAttribute('width','800');
+    canvas2.setAttribute('height','600');
 }
 var contextVideo   = canvasVideo.getContext('2d');
 var cv_width       = canvasVideo.width;
