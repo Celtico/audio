@@ -202,8 +202,6 @@ function handleAudio(stream) {
     }
 }
 
-
-
 function Audio() {
     pauseSound();
     document.getElementById("play").innerHTML  = "Play";
@@ -223,6 +221,24 @@ file_audio.onchange = function(e){
     }
 };
 
+
+function getSoundCloudId(track) {
+
+    pauseSound();
+    document.getElementById("play").innerHTML  = "Play";
+    document.getElementById("play").setAttribute('style','opacity:0.2');
+    isPlaying = false;
+
+    request = new XMLHttpRequest();
+    request.open('GET', track + '?client_id=f240950ceb38d793cf52508943c8dc3f', true);
+    request.responseType = 'arraybuffer';
+    request.addEventListener('load',function(event){
+        console.log(event);
+        audioBuffer(event.target.response);
+    }, false);
+    request.send();
+}
+
 function audioBuffer(data) {
 
     if(myAudioContext.decodeAudioData) {
@@ -240,7 +256,6 @@ function audioBuffer(data) {
     },1000);
 }
 
-
 function fetchSounds() {
     document.getElementById("play").setAttribute('style','opacity:0.2');
     request = new XMLHttpRequest();
@@ -251,7 +266,6 @@ function fetchSounds() {
     }, false);
     request.send();
 }
-
 function playSound() {
     SpectrumAnimationStop();
     VideoAnimationStop();
@@ -275,13 +289,8 @@ function routeSound(source) {
     myNodes.volume = myAudioContext.createGainNode();
     var panX = document.querySelector('#pan').value;
     var volume = document.querySelector('#volume').value;
-
-
-
     myNodes.filter.type = "highpass";
     myNodes.filter.frequency.value = 0;
-
-
     myNodes.panner.setPosition(panX, 0, 0);
     myNodes.volume.gain.value = volume;
     source.connect(myNodes.filter);
@@ -290,8 +299,6 @@ function routeSound(source) {
     myNodes.volume.connect(myAudioAnalyser);
     return source;
 }
-
-
 
 function changeFrequency(element) {
     var minValue = 100;
@@ -303,7 +310,6 @@ function changeFrequency(element) {
 function changeQuality(element) {
     myNodes.filter.Q.value = element.value *  30;
 }
-
 
 function pauseSound() {
     if(typeof mySource !== 'undefined'){
@@ -814,3 +820,34 @@ function toggleFullScreen() {
         }
     }
 }
+
+
+
+$('#search').keyup(function(ev) {
+
+
+    if($(this).val() == ''){
+        $('.sound').remove();
+    }
+
+    $.getJSON('http://api.soundcloud.com/tracks.json', {
+
+        q: $(this).val(), limit: 10, order: 'hotness', client_id: 'f240950ceb38d793cf52508943c8dc3f'
+
+    }).done(function(sounds) {
+
+        $('.sound').remove();
+        sounds.forEach(function(sound) {
+            $('<img src="' + (sound.artwork_url || sound.user.avatar_url) + '" data-url="'+ sound.stream_url +'">').addClass('sound').appendTo('#daw header');
+        });
+    });
+
+
+    return false;
+});
+
+$(document).on('click','#daw img',function(){
+    $('.sound').remove();
+    getSoundCloudId($(this).data('url'));
+});
+

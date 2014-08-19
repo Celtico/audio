@@ -7,6 +7,8 @@
     <title>Video & Audio Stream & Spacial Effects</title>
     <link href="style.css" media="all" rel="stylesheet" type="text/css">
     <script src="webkitAudioContextMonkeyPatch.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//connect.soundcloud.com/sdk.js"></script>
 </head>
 <body id="body">
 
@@ -84,6 +86,9 @@
                 <p id="velEsp">Velocitat<br><input id="vel_espectre" onchange="velSpectrumChange(this)" type="range" min="0" max="99" value="80" /></p>
             </div>
         </div>
+        <input type="text" name="search" id="search" placeholder="Cercar música">
+        <div id="daw"><header></header></div>
+        <div style="clear:both"></div>
         <p><a id="play" onclick="toggleSound(this)">Play</a></p>
         <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
         <div class="section">
@@ -113,9 +118,6 @@
         <input type="file" id="file_audio" name="audio" accept="audio/*;capture=microphone" />
         <canvas id="canvas" width="25" height="19"></canvas>
         <img id="img" src="test.jpg" width="3264" height="1832">
-        <p id="audioView">
-            <audio loop id="audioElement" src="MakeYourMoveFt.Goapele.mp3"  width="132" height="105" preload="auto"></audio>
-        </p>
     </div>
     <div class="nav-bar-bg"></div>
 </div>
@@ -123,7 +125,5 @@
     <canvas id="canvas2"  width="3400" height="2400"></canvas>
 </div>
 <script src="js.js"></script>
-
-
 </body>
 </html>

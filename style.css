@@ -68,6 +68,20 @@ a {
 .fullScreen .github {
     display: none;
 }
+#daw {
+    width: 132px;
+}
+#daw img {
+    width: 50%;
+    float: left;
+}
+#search {
+    border: 0;
+    width: 90%;
+    background: #eee;
+    padding: 5%;
+    margin: 0;
+}
 .full {
     cursor: pointer;
     display: block;
