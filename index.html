@@ -5,10 +5,12 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <title>Video & Audio Stream & Spacial Effects</title>
-    <link href="stylesheets/style.css" media="all" rel="stylesheet" type="text/css">
-    <script src="javascripts/webkitAudioContextMonkeyPatch.js"></script>
+    <link href="style.css" media="all" rel="stylesheet" type="text/css">
+    <script src="webkitAudioContextMonkeyPatch.js"></script>
 </head>
 <body id="body">
+
+
 <div class="boto-open" id="open">
     <div></div>
 </div>
@@ -17,6 +19,13 @@
         <div class="boto-tancar" id="close">
             <div></div>
         </div>
+
+            <span class="full"  id="fullScreen">
+                <span class="full-in-1"></span>
+                <span class="full-in-2"></span>
+                <span class="full-in-3"></span>
+                <span class="full-in-4"></span>
+            </span>
         <p class="video">
             <video autoplay id="videoElement"  width="132" height="70"></video>
             <canvas id="canvasVideo"  width="132" height="105"></canvas>
@@ -89,7 +98,13 @@
         <div class="section">
             <h3 onclick="toggleSection(this)">Més info</h3>
             <div class="body">
-                <p>cel[a]cenics.net</p>
+                <p><a href="https://github.com/Celtico/audio">github</a></p>
+                <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Celtico&amp;repo=audio&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"
+                        allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe><br>
+                <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Celtico&amp;repo=audio&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"
+                        allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe><br>
+                <iframe   src="http://ghbtns.com/github-btn.html?user=Celtico&repo=audio&count=true&type=follow"
+                          allowtransparency="true" frameborder="0" scrolling="0" width="130" height="20"></iframe>
             </div>
         </div>
     </div>
@@ -97,9 +112,9 @@
         <input type="file" id="file" name="file" />
         <input type="file" id="file_audio" name="audio" accept="audio/*;capture=microphone" />
         <canvas id="canvas" width="25" height="19"></canvas>
-        <img id="img" src="images/test.jpg">
+        <img id="img" src="test.jpg" width="3264" height="1832">
         <p id="audioView">
-            <audio loop id="audioElement" src="audio/MakeYourMoveFt.Goapele.mp3"  width="132" height="105" preload="auto"></audio>
+            <audio loop id="audioElement" src="MakeYourMoveFt.Goapele.mp3"  width="132" height="105" preload="auto"></audio>
         </p>
     </div>
     <div class="nav-bar-bg"></div>
@@ -107,6 +122,8 @@
 <div class="canvas-con" id="canvas-con">
     <canvas id="canvas2"  width="2400" height="1400"></canvas>
 </div>
-<script src="javascripts/js.js"></script>
+<script src="js.js"></script>
+
+
 </body>
 </html>

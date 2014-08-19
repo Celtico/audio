@@ -31,7 +31,6 @@ if(screenWidth < 700){
 var contextVideo   = canvasVideo.getContext('2d');
 var cv_width       = canvasVideo.width;
 var cv_height      = canvasVideo.height;
-var gray           = '0';
 var CanvasVideoFrame = null;
 var img            = document.getElementById('img');
 var file           = document.getElementById("file");
@@ -53,7 +52,7 @@ var myAudioContext,
     BANDPASS,
     panX,
     source,
-    mp3 = 'audio/MakeYourMoveFt.Goapele.mp3',
+    mp3 = 'MakeYourMoveFt.Goapele.mp3',
     spectrumType = 1,
     vel_espect = 0.95,
     value_hue = 0,
@@ -62,17 +61,17 @@ var myAudioContext,
     isUnlocked = false;
 
 
-    try {
-        window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext;
-        myAudioContext = new AudioContext();
+try {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext;
+    myAudioContext = new AudioContext();
 
-        fetchSounds();
+    fetchSounds();
 
-    } catch(e) {
+} catch(e) {
 
-        alert('Este navegador no soporta la API de audio');
+    alert('Este navegador no soporta la API de audio');
 
-    }
+}
 
 
 /**
@@ -292,12 +291,12 @@ function routeSound(source) {
 
 
 
- function changeFrequency(element) {
+function changeFrequency(element) {
     var minValue = 100;
     var maxValue = myAudioContext.sampleRate / 2;
     var numberOfOctaves = Math.log(maxValue / minValue) / Math.LN2;
     var multiplier = Math.pow(2, numberOfOctaves * (element.value - 1.0));
-     myNodes.filter.frequency.value = maxValue * multiplier;
+    myNodes.filter.frequency.value = maxValue * multiplier;
 }
 function changeQuality(element) {
     myNodes.filter.Q.value = element.value *  30;
@@ -610,9 +609,9 @@ function hueSat(pixels) {
 
 
     if (saturation < 0) {
-       satMul = 1+saturation;
+        satMul = 1+saturation;
     } else {
-       satMul = 1+saturation*2;
+        satMul = 1+saturation*2;
     }
 
     hue = (hue%360) / 360;
@@ -630,8 +629,8 @@ function hueSat(pixels) {
         var b = d[i + 2];
 
         //d[i]      = ((r+g+b)/3);
-       // d[i + 1]  = ((r+g+b)/3);
-       // d[i + 2]  = ((r+g+b)/3);
+        // d[i + 1]  = ((r+g+b)/3);
+        // d[i + 2]  = ((r+g+b)/3);
 
         if (hue != 0 || saturation != 0 || lightness != 0) {
             var vs = r;
@@ -645,29 +644,29 @@ function hueSat(pixels) {
             if (l > 0) {
                 if (vm > 0) {
                     if (l <= 0.5) {
-                         s = vm / (vs+ms) * satMul;
+                        s = vm / (vs+ms) * satMul;
                         if (s > 1) s = 1;
-                         v = (l * (1+s));
+                        v = (l * (1+s));
                     } else {
-                         s = vm / (510-vs-ms) * satMul;
+                        s = vm / (510-vs-ms) * satMul;
                         if (s > 1) s = 1;
-                         v = (l+s - l*s);
+                        v = (l+s - l*s);
                     }
                     if (r == vs) {
                         if (g == ms)
                             h = 5 + ((vs-b)/vm) + hue6;
                         else
-                             h = 1 - ((vs-g)/vm) + hue6;
+                            h = 1 - ((vs-g)/vm) + hue6;
                     } else if (g == vs) {
                         if (b == ms)
-                             h = 1 + ((vs-r)/vm) + hue6;
+                            h = 1 + ((vs-r)/vm) + hue6;
                         else
-                             h = 3 - ((vs-b)/vm) + hue6;
+                            h = 3 - ((vs-b)/vm) + hue6;
                     } else {
                         if (r == ms)
-                             h = 3 + ((vs-g)/vm) + hue6;
+                            h = 3 + ((vs-g)/vm) + hue6;
                         else
-                             h = 5 - ((vs-r)/vm) + hue6;
+                            h = 5 - ((vs-r)/vm) + hue6;
                     }
                     if (h < 0) h+=6;
                     if (h >= 6) h-=6;
@@ -771,7 +770,45 @@ function velSpectrumChange(e){
 }
 
 function toggleSection(e){
+
     var bodySection = e.nextSibling.nextSibling;
     bodySection.style.display == "block" ?  bodySection.style.display = "none" :
-    bodySection.style.display = "block";
+        bodySection.style.display = "block";
+    var hashFull = e.classList[0];
+    if(typeof hashFull === 'undefined'){
+        e.classList.add("open");
+    }else{
+        e.classList.remove("open");
+    }
+}
+
+document.getElementById("fullScreen").addEventListener("click",fullScreen, false);
+function fullScreen(){
+    toggleFullScreen();
+    var hashFull = document.getElementById("body").classList[0];
+    if(typeof hashFull === 'undefined'){
+        document.getElementById("body").classList.add("fullScreen");
+    }else{
+        document.getElementById("body").classList.remove("fullScreen");
+    }
+}
+function toggleFullScreen() {
+    if ((document.fullScreenElement && document.fullScreenElement !== null) ||
+        (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+        if (document.documentElement.requestFullScreen) {
+            document.documentElement.requestFullScreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullScreen) {
+            document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        }
+    }
 }
