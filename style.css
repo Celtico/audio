@@ -303,6 +303,12 @@ a {
     .section h3 {
         padding: 3px 3px 4px 4px;
     }
+    .section h3:before {
+        margin-top: 1px;
+    }
+    .section h3.open:before {
+        margin-top: 4px;
+    }
     #play {
         margin-top: 20px;
         padding: 15px 0;
