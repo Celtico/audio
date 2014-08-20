@@ -1,4 +1,5 @@
 
+
 var screenWidth    = window.innerWidth;
 var screenHeight   = window.innerHeight;
 var video          = document.querySelector("#videoElement");
@@ -58,20 +59,18 @@ var myAudioContext,
     BANDPASS,
     panX,
     source,
-    mp3 = 'MakeYourMoveFt.Goapele.mp3',
     spectrumType = 1,
     vel_espect = 0.95,
     value_hue = 0,
     value_saturation =  0,
-    value_lightness = 0,
-    isUnlocked = false;
+    value_lightness = 0;
 
 
 try {
     window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext;
     myAudioContext = new AudioContext();
-
-    fetchSounds();
+    getAudioList('reggae',true);
+    //fetchSounds();
 
 } catch(e) {
 
@@ -222,6 +221,14 @@ file_audio.onchange = function(e){
             audioBuffer(data);
         };
         reader.readAsArrayBuffer(file);
+
+        reader.addEventListener('progress',function(event){
+
+            var preload = Math.round(( event.loaded * 100  ) / event.total );
+            document.getElementById("preload-in").setAttribute('style','width:'+ preload + '%;');
+            document.getElementById("preload-in").innerHTML  = preload + '%';
+
+        }, false);
     }
 };
 
@@ -231,18 +238,34 @@ function getSoundCloudId(track) {
     pauseSound();
     document.getElementById("play").innerHTML  = "Play";
     document.getElementById("play").setAttribute('style','opacity:0.2');
+    document.getElementById("preload-in").setAttribute('style','width:0%;');
+    document.getElementById("preload-in").innerHTML  = '0%';
+    document.getElementById("currentTime").value = 0;
+    var canvasWaveform = document.querySelector('#waveform');
+    var context = canvasWaveform.getContext('2d');
+    context.clearRect(0, 0, canvasWaveform.width, canvasWaveform.height);
     isPlaying = false;
+    myBuffers = '';
 
     request = new XMLHttpRequest();
+
     request.open('GET', track + '?client_id=f240950ceb38d793cf52508943c8dc3f', true);
     request.contentType = 'text/plain';
     request.xhrFields = {withCredentials: false};
     request.responseType = 'arraybuffer';
     request.addEventListener('load',function(event){
-        console.log(event);
         audioBuffer(event.target.response);
     }, false);
     request.send();
+
+    request.addEventListener('progress',function(event){
+
+        var preload = Math.round(( event.loaded * 100  ) / event.total );
+        document.getElementById("preload-in").setAttribute('style','width:'+ preload + '%;');
+        document.getElementById("preload-in").innerHTML  = preload + '%';
+
+    }, false);
+
 }
 
 function audioBuffer(data) {
@@ -250,28 +273,127 @@ function audioBuffer(data) {
     if(myAudioContext.decodeAudioData) {
         myAudioContext.decodeAudioData(data, function(buffer) {
             myBuffers = buffer;
+            buffers(myBuffers);
         }, function() {
             alert("Decoding the audio buffer failed");
         });
     } else {
         myBuffers = myAudioContext.createBuffer(data,false);
+        buffers(myBuffers);
     }
 
-    setTimeout(function(){
-        document.getElementById("play").setAttribute('style','opacity:1');
-    },500);
 }
 
-function fetchSounds() {
-    document.getElementById("play").setAttribute('style','opacity:0.2');
-    request = new XMLHttpRequest();
-    request.open('GET', mp3 , true);
-    request.responseType = 'arraybuffer';
-    request.addEventListener('load',function(event){
-        audioBuffer(event.target.response);
-    }, false);
-    request.send();
+function buffers(myBuffers) {
+
+    document.getElementById("play").setAttribute('style','opacity:1');
+    playSound();
+    document.getElementById("play").innerHTML  = "Stop";
+    isPlaying = true;
+    isMicro = false;
+    document.getElementById("micro").classList.remove("active");
+    document.getElementById("audio").classList.add("active");
+    document.getElementById("play").classList.add("active");
+    document.getElementById("currentTime").value =  0;
+
+    var canvasWaveform = document.querySelector('#waveform');
+    var context = canvasWaveform.getContext('2d');
+    var canvasWidth = canvasWaveform.width;
+    var canvasHeight = canvasWaveform.height;
+
+
+    var leftChannel = myBuffers.getChannelData(0);
+    var resampled = new Float64Array(canvasWidth * 10);
+
+
+    var i=0, j=0, buckIndex = 0;
+    var min=1e3, max=-1e3;
+    var thisValue=0, res=0;
+
+
+    var sampleCount = leftChannel.length;
+
+    for (i=0; i<sampleCount; i++) {
+
+        buckIndex = 0 | ( canvasWidth * i / sampleCount );
+        buckIndex *= 6;
+
+        thisValue = leftChannel[i];
+        if (thisValue>0) {
+            resampled[buckIndex    ] += thisValue;
+            resampled[buckIndex + 1] +=1;
+        } else if (thisValue<0) {
+            resampled[buckIndex + 3] += thisValue;
+            resampled[buckIndex + 4] +=1;
+        }
+        if (thisValue<min) min=thisValue;
+        if (thisValue>max) max = thisValue;
+    }
+    // compute mean now
+    for (i=0, j=0; i<canvasWidth; i++, j+=6) {
+        if (resampled[j+1] != 0) {
+            resampled[j] /= resampled[j+1];
+        }
+        if (resampled[j+4]!= 0) {
+            resampled[j+3] /= resampled[j+4];
+        }
+    }
+    // second pass for mean variation  ( variance is too low)
+    for (i=0; i<leftChannel.length; i++) {
+        // in which bucket do we fall ?
+        buckIndex = 0 | (canvasWidth * i / leftChannel.length );
+        buckIndex *= 6;
+        // positive or negative ?
+        thisValue = leftChannel[i];
+        if (thisValue>0) {
+            resampled[buckIndex + 2] += Math.abs( resampled[buckIndex] - thisValue );
+        } else  if (thisValue<0) {
+            resampled[buckIndex + 5] += Math.abs( resampled[buckIndex + 3] - thisValue );
+        }
+    }
+
+    for (i=0, j=0; i<canvasWidth; i++, j+=6) {
+        if (resampled[j+1]) resampled[j+2] /= resampled[j+1];
+        if (resampled[j+4]) resampled[j+5] /= resampled[j+4];
+    }
+    context.save();
+    context.fillStyle ='#EEE';
+    context.fillRect(0,0,canvasWidth,canvasHeight );
+    context.translate(0.5,canvasHeight / 2);
+    context.scale(1, 50);
+
+    for (i=0; i< canvasWidth; i++) {
+
+        j= i * 6;
+
+        context.strokeStyle = "rgba(0,0,0,0.3)";
+        context.beginPath();
+        context.moveTo( i  , (resampled[j] - resampled[j+2] ));
+        context.lineTo( i  , (resampled[j +3] + resampled[j+5] ) );
+        context.stroke();
+
+        context.strokeStyle = '#EEE';
+        context.beginPath();
+        context.moveTo( i  , (resampled[j] - resampled[j+2] ));
+        context.lineTo( i  , (resampled[j] + resampled[j+2] ) );
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo( i  , (resampled[j+3] + resampled[j+5] ));
+        context.lineTo( i  , (resampled[j+3] - resampled[j+5] ) );
+        context.stroke();
+    }
+    context.restore();
+
+
 }
+
+
+function currentTimeChange(e){
+    myAudioContext.currentTime =  e.value;
+}
+
+
 function playSound() {
     SpectrumAnimationStop();
     VideoAnimationStop();
@@ -283,10 +405,16 @@ function playSound() {
     source.buffer = myBuffers;
     source.loop = true;
     source = routeSound(source);
-    source.noteOn(0);
+
+
+    source.start(myAudioContext.currentTime);
+    console.log(myAudioContext.currentTime);
+    myAudioContext.currentTime = myAudioContext.currentTime;
     SpectrumAnimationStart();
     VideoAnimationStart();
     mySource = source;
+    document.getElementById("currentTime").value =  myAudioContext.currentTime;
+    document.getElementById("currentTime").max   =  myBuffers.duration;
 }
 
 function routeSound(source) {
@@ -368,6 +496,9 @@ function sliderChange(slider) {
 
 
 function drawSpectrum() {
+
+    document.getElementById("currentTime").value = myAudioContext.currentTime;
+
     var canvas = document.querySelector('#waveCanvas');
     var ctx = canvas.getContext('2d');
     var width = canvas.width;
@@ -830,29 +961,30 @@ function toggleFullScreen() {
 
 
 $('#search').keyup(function(ev) {
-
-
-    if($(this).val() == ''){
-        $('.sound').remove();
-    }
-
-    $.getJSON('http://api.soundcloud.com/tracks.json', {
-
-        q: $(this).val(), limit: 10, order: 'hotness', client_id: 'f240950ceb38d793cf52508943c8dc3f'
-
-    }).done(function(sounds) {
-
-        $('.sound').remove();
-        sounds.forEach(function(sound) {
-            $('<img src="' + (sound.artwork_url || sound.user.avatar_url) + '" data-url="'+ sound.stream_url +'">').addClass('sound').appendTo('#daw header');
-        });
-    });
-
-
+    getAudioList($(this).val(),false);
     return false;
 });
 
 $(document).on('click','#daw img',function(){
     getSoundCloudId($(this).data('url'));
 });
+
+
+function getAudioList(val,init){
+
+    $.getJSON('http://api.soundcloud.com/tracks.json', {
+        q: val, limit: 10, order: 'hotness', client_id: 'f240950ceb38d793cf52508943c8dc3f'
+    }).done(function(sounds) {
+
+        $('.sound').remove();
+        sounds.forEach(function(sound) {
+            $('<img src="' + (sound.artwork_url || sound.user.avatar_url) + '" data-url="'+ sound.stream_url +'">').addClass('sound').appendTo('#daw header');
+        });
+
+        if(init !== false){
+            getSoundCloudId(sounds[0].stream_url);
+        }
+    });
+
+}
 

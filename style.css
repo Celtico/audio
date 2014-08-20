@@ -50,6 +50,29 @@ body {
     width: 100%;
     height: 100%;
 }
+.currentTime {
+    position: relative;
+}
+.currentTime input[type='range'] {
+    height: 0;
+    position: absolute;
+    top: -3px;
+    z-index: 10;
+    left: 0;
+}
+.currentTime input[type='range']::-moz-range-track {
+    height: 0;
+}
+.currentTime input[type='range']::-webkit-slider-thumb {
+    height: 19px;
+    width: 1px;
+    background-color: #222222;
+}
+.currentTime input[type='range']::-moz-range-thumb {
+    height: 19px;
+    width: 1px;
+    background-color: #222222;
+}
 #videoElement {
     width: 132px;
     height: 105px;
@@ -74,6 +97,26 @@ a {
 #daw img {
     width: 50%;
     float: left;
+    cursor: pointer;
+}
+#preload {
+    position: relative;
+    color: #222222;
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
+    top: 0;
+}
+#preload #preload-in {
+    position: absolute;
+    background: #eee;
+    line-height: 20px;
+    top: 0;
+    z-index: 1;
+}
+#preload canvas {
+    position: relative;
+    z-index: 10;
 }
 #search {
     border: 0;
@@ -326,10 +369,6 @@ a {
     .section h3.open:before {
         margin-top: 4px;
     }
-    #play {
-        margin-top: 20px;
-        padding: 15px 0;
-    }
     input[type='range'] {
         user-select: none;
         -webkit-user-select: none;
@@ -396,5 +435,8 @@ a {
     }
     #daw {
         width: 100%;
+    }
+    .currentTime input[type='range'] {
+        top: -11px;
     }
 }
