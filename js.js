@@ -853,7 +853,6 @@ $('#search').keyup(function(ev) {
 });
 
 $(document).on('click','#daw img',function(){
-    $('.sound').remove();
     getSoundCloudId($(this).data('url'));
 });
 
