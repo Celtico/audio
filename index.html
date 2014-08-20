@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <title>Video & Audio Stream & Spacial Effects</title>
     <link href="style.css" media="all" rel="stylesheet" type="text/css">
     <script src="webkitAudioContextMonkeyPatch.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//connect.soundcloud.com/sdk.js"></script>
+    <script src="http://connect.soundcloud.com/sdk.js"></script>
 
 </head>
 <body id="body">
@@ -29,95 +29,120 @@
                 <span class="full-in-3"></span>
                 <span class="full-in-4"></span>
             </span>
-        <p class="video">
-            <video autoplay id="videoElement"  width="132" height="70"></video>
-            <canvas id="canvasVideo"  width="132" height="105"></canvas>
-        </p>
-        <p class="btn-data">
-            <a id="webcam">
-                Càmera
-            </a>
-            <a id="imatgeUp">
-                <span class="icon-carpeta"></span>
-                Imatge
-            </a>
-        </p>
-        <div style="clear:both"></div>
-        <div class="section">
-            <h3 onclick="toggleSection(this)">Dimensions</h3>
-            <div class="body">
-                <p>Distància entre punts<br><input type="range" id="puns" name="rangeInput" min="10" max="100" value="30"></p>
-                <p>Mida dels punts<br><input type="range" id="slider" name="rangeInput" min="0" max="100" value="20"></p>
-                <p>Definició <span style="font-weight:bold; color:#ff1400; font-size:10px">amb precaució</span><br><input type="range" id="definicio"  onchange="definicioChange(this)"  name="definicio" min="1" max="100" value="50"></p>
-            </div>
-        </div>
-        <div class="section">
-            <h3 onclick="toggleSection(this)">Colors</h3>
-            <div class="body">
-                <p>Contrast i brillo<br><input type="range" id="brillo" name="rangeInput" min="-100" max="100" value="0"></p>
-                <p>Tono<br><input type="range" onchange="hueChange(this)"  name="rangeInput" min="-180" max="180" value="0"></p>
-                <p>Saturació<br><input type="range" onchange="saturationChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
-                <p>Llum<br><input type="range" onchange="lightnessChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
-                <p>Color de fons b/n<br><input type="range" id="fons" name="rangeInput" min="0" max="99" value="0"></p>
-            </div>
-        </div>
-        <div class="section">
-            <h3 onclick="toggleSection(this)">Formes</h3>
-            <div class="body">
-                <p>Canvia de forma<br><input type="range"  onchange="formaChange(this)" name="froma" min="1" max="20" value="1"></p>
-            </div>
-        </div>
-        <p style="margin:0; padding:0">
-            <canvas id="waveCanvas"  width="132" height="105"></canvas>
-        </p>
-        <p class="btn-data">
-            <a id="micro">
-                Micròfon
-            </a>
-            <a id="audio" class="active">
-                <span class="icon-carpeta"></span>
-                Àudio
-            </a>
-        </p>
-        <div style="clear:both"></div>
-        <div style="margin-top:4px; padding-top:0" class="currentTime">
-            <div id="preload">
-                <canvas id="waveform" width="132" height="20"></canvas>
-                <div id="preload-in"></div>
-                <input type="range" id="currentTime" onchange="currentTimeChange(this)"  min="0" max="99" value="0">
-            </div>
 
-            <a id="play" onclick="toggleSound(this)">Play</a>
-        </div>
-        <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
         <div class="section">
-            <h3 onclick="toggleSection(this)">Cercar de música</h3>
+            <h3 onclick="toggleSection(this)">Imatge</h3>
             <div class="body">
-                <p><input type="text" name="search" id="search" placeholder="Cercar música"></p>
-                <div id="daw"><header></header></div>
+
+
+
+
+                <p class="video">
+                    <video autoplay id="videoElement"  width="132" height="70"></video>
+                    <canvas id="canvasVideo"  width="132" height="105"></canvas>
+                </p>
+                <p class="btn-data">
+                    <a id="webcam">
+                        Càmera
+                    </a>
+                    <a id="imatgeUp">
+                        <span class="icon-carpeta"></span>
+                        Imatge
+                    </a>
+                </p>
                 <div style="clear:both"></div>
+                <div class="section">
+                    <h3 onclick="toggleSection(this)">Dimensions</h3>
+                    <div class="body">
+                        <p>Distància entre punts<br><input type="range" id="puns" name="rangeInput" min="10" max="100" value="30"></p>
+                        <p>Mida dels punts<br><input type="range" id="slider" name="rangeInput" min="0" max="100" value="20"></p>
+                        <p>Definició <span style="font-weight:bold; color:#ff1400; font-size:10px">amb precaució</span><br><input type="range" id="definicio"  onchange="definicioChange(this)"  name="definicio" min="1" max="100" value="50"></p>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3 onclick="toggleSection(this)">Colors</h3>
+                    <div class="body">
+                        <p>Contrast i brillo<br><input type="range" id="brillo" name="rangeInput" min="-100" max="100" value="0"></p>
+                        <p>Tono<br><input type="range" onchange="hueChange(this)"  name="rangeInput" min="-180" max="180" value="0"></p>
+                        <p>Saturació<br><input type="range" onchange="saturationChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
+                        <p>Llum<br><input type="range" onchange="lightnessChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
+                        <p>Color de fons b/n<br><input type="range" id="fons" name="rangeInput" min="0" max="99" value="0"></p>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3 onclick="toggleSection(this)">Formes</h3>
+                    <div class="body">
+                        <p>Canvia de forma<br><input type="range"  onchange="formaChange(this)" name="froma" min="1" max="20" value="1"></p>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div class="section">
-            <h3 onclick="toggleSection(this)">Espectre</h3>
+        <div class="section" style="width: 132px">
+            <h3 onclick="toggleSection(this)">Àudio</h3>
             <div class="body">
-                <p>Tipo<br><input id="espectre" onchange="spectrumChange()" type="range" min="0" max="1" step="1" value="0" /></p>
-                <p id="velEsp">Velocitat<br><input id="vel_espectre" onchange="velSpectrumChange(this)" type="range" min="0" max="99" value="80" /></p>
+
+
+
+
+                <p style="margin:0; padding:0">
+                    <canvas id="waveCanvas"  width="132" height="105"></canvas>
+                </p>
+                <p class="btn-data">
+                    <a id="micro">
+                        Micròfon
+                    </a>
+                    <a id="audio" class="active">
+                        <span class="icon-carpeta"></span>
+                        Àudio
+                    </a>
+                </p>
+                <div style="clear:both"></div>
+                <div style="margin-top:4px; padding-top:0" class="currentTime">
+                    <div id="preload">
+                        <canvas id="waveform" width="132" height="20"></canvas>
+                        <div id="preload-in"></div>
+                        <input type="range" id="currentTime" onchange="currentTimeChange(this)"  min="0" max="99" value="0">
+                    </div>
+
+                    <a id="play" onclick="toggleSound(this)">Play</a>
+                </div>
+                <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
+                <div class="section">
+                    <h3 onclick="toggleSection(this)">Cercar de música</h3>
+                    <div class="body">
+                        <p><input type="text" name="search" id="search" placeholder="Cercar música"></p>
+                        <div id="daw"><header></header></div>
+                        <div style="clear:both"></div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 onclick="toggleSection(this)">Espectre</h3>
+                    <div class="body">
+                        <p>Tipo<br><input id="espectre" onchange="spectrumChange()" type="range" min="0" max="1" step="1" value="0" /></p>
+                        <p id="velEsp">Velocitat<br><input id="vel_espectre" onchange="velSpectrumChange(this)" type="range" min="0" max="99" value="80" /></p>
+                    </div>
+                </div>
+
+
+
+
+                <div class="section">
+                    <h3 onclick="toggleSection(this)">Filtres</h3>
+                    <div class="body">
+                        <p>Filtre Freqüència<br><input id="frequency" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" />
+                            <br><input id="quality" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" /></p>
+                        <p>Canals<br><input id="pan" onchange="sliderChange(this)" type="range" min="-3" max="3" step="0.01" value="0" /></p>
+                    </div>
+                </div>
+
+
             </div>
         </div>
 
 
-
-
-        <div class="section">
-            <h3 onclick="toggleSection(this)">Filtres</h3>
-            <div class="body">
-                <p>Filtre Freqüència<br><input id="frequency" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" />
-                    <br><input id="quality" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" /></p>
-                <p>Canals<br><input id="pan" onchange="sliderChange(this)" type="range" min="-3" max="3" step="0.01" value="0" /></p>
-            </div>
-        </div>
         <span class="separador"></span>
         <div class="section">
             <h3 onclick="toggleSection(this)">Més info</h3>
