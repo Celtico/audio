@@ -478,7 +478,6 @@ function SpectrumAnimationStop() {
  * */
 function resetTrack(){
     if(typeof source !== 'undefined'){
-        source.stop();
         source.disconnect();
     }
     pauseSound();
