@@ -69,7 +69,7 @@ var myAudioContext,
 try {
     window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext;
     myAudioContext = new AudioContext();
-    getAudioList('reggae',true);
+    getAudioList('jazz',true);
 } catch(e) {
     alert('Este navegador no soporta la API de audio');
 }
@@ -239,7 +239,7 @@ function getAudioList(val,init){
             $('<img src="' + (sound.artwork_url || sound.user.avatar_url) + '" data-url="'+ sound.stream_url +'">').addClass('sound').appendTo('#daw header');
         });
         if(init !== false){
-            getSoundCloudId(sounds[0].stream_url);
+            getSoundCloudId(sounds[3].stream_url);
         }
     });
 }
