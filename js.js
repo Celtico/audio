@@ -356,7 +356,7 @@ function pauseSound() {
         SpectrumAnimationStop();
         VideoAnimationStop();
         source = mySource;
-        source.stop();
+        source.noteOff(0);
         document.getElementById("play").innerHTML  = "Play";
         document.getElementById("play").classList.remove("active");
         isPlaying = false;
