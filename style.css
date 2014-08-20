@@ -66,12 +66,12 @@ body {
 .currentTime input[type='range']::-webkit-slider-thumb {
     height: 19px;
     width: 1px;
-    background-color: #222222;
+    background-color: #dddddd;
 }
 .currentTime input[type='range']::-moz-range-thumb {
     height: 19px;
     width: 1px;
-    background-color: #222222;
+    background-color: #dddddd;
 }
 #videoElement {
     width: 132px;

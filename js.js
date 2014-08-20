@@ -248,10 +248,6 @@ function getSoundCloudId(track) {
     myBuffers = '';
 
     request = new XMLHttpRequest();
-    SC.initialize({
-        client_id: 'f240950ceb38d793cf52508943c8dc3f'
-    });
-
     request.open('GET', track + '?client_id=f240950ceb38d793cf52508943c8dc3f', true);
     request.contentType = 'text/plain';
     request.scope = '*';
@@ -312,92 +308,30 @@ function buffers(myBuffers) {
     var canvasHeight = canvasWaveform.height;
 
 
-    var leftChannel = myBuffers.getChannelData(0);
-    var resampled = new Float64Array(canvasWidth * 10);
-
-
-    var i=0, j=0, buckIndex = 0;
-    var min=1e3, max=-1e3;
-    var thisValue=0, res=0;
-
-
-    var sampleCount = leftChannel.length;
-
-    for (i=0; i<sampleCount; i++) {
-
-        buckIndex = 0 | ( canvasWidth * i / sampleCount );
-        buckIndex *= 6;
-
-        thisValue = leftChannel[i];
-        if (thisValue>0) {
-            resampled[buckIndex    ] += thisValue;
-            resampled[buckIndex + 1] +=1;
-        } else if (thisValue<0) {
-            resampled[buckIndex + 3] += thisValue;
-            resampled[buckIndex + 4] +=1;
-        }
-        if (thisValue<min) min=thisValue;
-        if (thisValue>max) max = thisValue;
-    }
-    // compute mean now
-    for (i=0, j=0; i<canvasWidth; i++, j+=6) {
-        if (resampled[j+1] != 0) {
-            resampled[j] /= resampled[j+1];
-        }
-        if (resampled[j+4]!= 0) {
-            resampled[j+3] /= resampled[j+4];
-        }
-    }
-    // second pass for mean variation  ( variance is too low)
-    for (i=0; i<leftChannel.length; i++) {
-        // in which bucket do we fall ?
-        buckIndex = 0 | (canvasWidth * i / leftChannel.length );
-        buckIndex *= 6;
-        // positive or negative ?
-        thisValue = leftChannel[i];
-        if (thisValue>0) {
-            resampled[buckIndex + 2] += Math.abs( resampled[buckIndex] - thisValue );
-        } else  if (thisValue<0) {
-            resampled[buckIndex + 5] += Math.abs( resampled[buckIndex + 3] - thisValue );
-        }
-    }
-
-    for (i=0, j=0; i<canvasWidth; i++, j+=6) {
-        if (resampled[j+1]) resampled[j+2] /= resampled[j+1];
-        if (resampled[j+4]) resampled[j+5] /= resampled[j+4];
-    }
-    context.save();
-    context.fillStyle ='#EEE';
-    context.fillRect(0,0,canvasWidth,canvasHeight );
-    context.translate(0.5,canvasHeight / 2);
-    context.scale(1, 50);
-
-    for (i=0; i< canvasWidth; i++) {
-
-        j= i * 6;
-
-        context.strokeStyle = "rgba(0,0,0,0.3)";
-        context.beginPath();
-        context.moveTo( i  , (resampled[j] - resampled[j+2] ));
-        context.lineTo( i  , (resampled[j +3] + resampled[j+5] ) );
-        context.stroke();
-
-        context.strokeStyle = '#EEE';
-        context.beginPath();
-        context.moveTo( i  , (resampled[j] - resampled[j+2] ));
-        context.lineTo( i  , (resampled[j] + resampled[j+2] ) );
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo( i  , (resampled[j+3] + resampled[j+5] ));
-        context.lineTo( i  , (resampled[j+3] - resampled[j+5] ) );
-        context.stroke();
-    }
-    context.restore();
-
+    drawBuffer(canvasWidth,  canvasHeight, context, myBuffers);
 
 }
 
+
+function drawBuffer(width, height, context, buffer ) {
+
+    var data = buffer.getChannelData(0);
+    var step = Math.ceil( data.length / width );
+    var amp = height / 2;
+
+    for(var i=0; i < width; i++){
+        var min = 2.0;
+        var max = -2.0;
+        for (var j=0; j < step; j++) {
+            var datum = data[(i*step)+j];
+            if (datum < min)
+                min = datum;
+            if (datum > max)
+                max = datum;
+        }
+        context.fillRect(i,(1+min)*amp,1,Math.max(1,(max-min)*amp));
+    }
+}
 
 function currentTimeChange(e){
     myAudioContext.currentTime =  e.value;
