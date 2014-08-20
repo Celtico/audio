@@ -235,6 +235,8 @@ function getSoundCloudId(track) {
 
     request = new XMLHttpRequest();
     request.open('GET', track + '?client_id=f240950ceb38d793cf52508943c8dc3f', true);
+    request.contentType = 'text/plain';
+    request.xhrFields = {withCredentials: false};
     request.responseType = 'arraybuffer';
     request.addEventListener('load',function(event){
         console.log(event);
