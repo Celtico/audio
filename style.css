@@ -322,6 +322,7 @@ a {
 .section {
     margin-top: 8px;
     margin-bottom: 8px;
+    width: 132px;
 }
 .section h3 {
     font-size: 10px;
@@ -371,10 +372,8 @@ a {
     .section h3.open:before {
         margin-top: 4px;
     }
-    input[type='range'] {
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
+    .section {
+        width: 100%;
     }
     .nav-bar {
         display: block;
