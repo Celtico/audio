@@ -1,5 +1,6 @@
 
 var screenWidth    = window.innerWidth;
+var screenHeight   = window.innerHeight;
 var video          = document.querySelector("#videoElement");
 var video_element  = document.getElementById('videoElement');
 var canvas         = document.getElementById('canvas');
@@ -8,8 +9,8 @@ canvas.setAttribute('height','20');
 var bulletSize     = 40;
 var radius         = bulletSize / 2;
 if(screenWidth < 700){
-    canvas.setAttribute('width','20');
-    canvas.setAttribute('height','15');
+    canvas.setAttribute('width','10');
+    canvas.setAttribute('height','7');
     bulletSize     = 36;
     radius         = bulletSize / 2;
 }
@@ -29,6 +30,9 @@ if(screenWidth < 700){
     waveCanvas.setAttribute('height','130');
     canvas2.setAttribute('width','800');
     canvas2.setAttribute('height','600');
+} else{
+    canvas2.setAttribute('width',screenWidth  + 300);
+    canvas2.setAttribute('height',screenHeight + 300);
 }
 var contextVideo   = canvasVideo.getContext('2d');
 var cv_width       = canvasVideo.width;
@@ -253,7 +257,7 @@ function audioBuffer(data) {
 
     setTimeout(function(){
         document.getElementById("play").setAttribute('style','opacity:1');
-    },1000);
+    },500);
 }
 
 function fetchSounds() {

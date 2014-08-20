@@ -79,6 +79,16 @@
             </a>
         </p>
         <div style="clear:both"></div>
+        <p><a id="play" onclick="toggleSound(this)">Play</a></p>
+        <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
+        <div class="section">
+            <h3 onclick="toggleSection(this)">Cercar de música</h3>
+            <div class="body">
+                <input type="text" name="search" id="search" placeholder="Cercar música">
+                <div id="daw"><header></header></div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
         <div class="section">
             <h3 onclick="toggleSection(this)">Espectre</h3>
             <div class="body">
@@ -86,11 +96,6 @@
                 <p id="velEsp">Velocitat<br><input id="vel_espectre" onchange="velSpectrumChange(this)" type="range" min="0" max="99" value="80" /></p>
             </div>
         </div>
-        <input type="text" name="search" id="search" placeholder="Cercar música">
-        <div id="daw"><header></header></div>
-        <div style="clear:both"></div>
-        <p><a id="play" onclick="toggleSound(this)">Play</a></p>
-        <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
         <div class="section">
             <h3 onclick="toggleSection(this)">Àudio</h3>
             <div class="body">
