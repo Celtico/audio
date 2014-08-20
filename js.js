@@ -240,6 +240,7 @@ function getAudioList(val,init){
         });
         if(init !== false){
             getSoundCloudId(sounds[2].stream_url);
+            getSoundCloudId(sounds[2].stream_url);
         }
     });
 }
