@@ -248,10 +248,15 @@ function getSoundCloudId(track) {
     myBuffers = '';
 
     request = new XMLHttpRequest();
+    SC.initialize({
+        client_id: 'f240950ceb38d793cf52508943c8dc3f'
+    });
 
     request.open('GET', track + '?client_id=f240950ceb38d793cf52508943c8dc3f', true);
     request.contentType = 'text/plain';
+    request.scope = '*';
     request.xhrFields = {withCredentials: false};
+    request.crossDomain = true;
     request.responseType = 'arraybuffer';
     request.addEventListener('load',function(event){
         audioBuffer(event.target.response);
@@ -297,6 +302,11 @@ function buffers(myBuffers) {
     document.getElementById("currentTime").value =  0;
 
     var canvasWaveform = document.querySelector('#waveform');
+
+    if(screenWidth < 700){
+        canvasWaveform.width  = screenWidth - 40;
+    }
+
     var context = canvasWaveform.getContext('2d');
     var canvasWidth = canvasWaveform.width;
     var canvasHeight = canvasWaveform.height;
@@ -973,7 +983,7 @@ $(document).on('click','#daw img',function(){
 function getAudioList(val,init){
 
     $.getJSON('http://api.soundcloud.com/tracks.json', {
-        q: val, limit: 10, order: 'hotness', client_id: 'f240950ceb38d793cf52508943c8dc3f'
+        q: val, limit: 10, order: 'hotness', downloadable:true, client_id: 'f240950ceb38d793cf52508943c8dc3f'
     }).done(function(sounds) {
 
         $('.sound').remove();
