@@ -101,7 +101,7 @@ a {
 }
 #preload {
     position: relative;
-    color: #222222;
+    color: #dddddd;
     font-size: 10px;
     text-align: center;
     font-weight: bold;
@@ -109,7 +109,7 @@ a {
 }
 #preload #preload-in {
     position: absolute;
-    background: #eee;
+    background: #222222;
     line-height: 20px;
     top: 0;
     z-index: 1;
