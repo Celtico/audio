@@ -214,7 +214,7 @@ a {
 }
 .boto-open {
     padding: 6px;
-    background: rgba(255, 255, 255, 0.81);
+    background: rgba(255, 255, 255, 0.5);
     width: 24px;
     height: 18px;
     position: absolute;
