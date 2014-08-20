@@ -239,7 +239,7 @@ function getAudioList(val,init){
             $('<img src="' + (sound.artwork_url || sound.user.avatar_url) + '" data-url="'+ sound.stream_url +'">').addClass('sound').appendTo('#daw header');
         });
         if(init !== false){
-            getSoundCloudId(sounds[3].stream_url);
+            getSoundCloudId(sounds[2].stream_url);
         }
     });
 }
