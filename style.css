@@ -81,6 +81,9 @@ a {
     background: #eee;
     padding: 5%;
     margin: 0;
+    -webkit-appearance: none;
+    border-radius: 0;
+    -webkit-border-radius: 0px;
 }
 .full {
     cursor: pointer;
