@@ -532,6 +532,14 @@ function playVideo() {
                 "rgba(" + imageData.data[0] + ',' +  imageData.data[1]  + ',' +  imageData.data[2]  + ","+transparencia+")",
                 freqRadius
             );
+
+            forms(
+                context2,
+                centerY * 10,
+                centerX * 10,
+                "rgba(" + imageData.data[0] + ',' +  imageData.data[1]  + ',' +  imageData.data[2]  + ","+transparencia+")",
+                freqRadius * 10
+            );
         }
     }
     if (!window.requestAnimationFrame){
