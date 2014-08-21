@@ -66,6 +66,7 @@
                         <p>Tono<br><input type="range" onchange="hueChange(this)"  name="rangeInput" min="-180" max="180" value="0"></p>
                         <p>Saturació<br><input type="range" onchange="saturationChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
                         <p>Llum<br><input type="range" onchange="lightnessChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
+                        <p>Transparència<br><input type="range" onchange="transparenciaChange(this)"  min="0" max="1" step="0.01" value="1"></p>
                         <p>Color de fons b/n<br><input type="range" id="fons" name="rangeInput" min="0" max="99" value="0"></p>
                     </div>
                 </div>
@@ -109,7 +110,7 @@
                 </div>
                 <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
                 <div class="section">
-                    <h3 onclick="toggleSection(this)">Cercador</h3>
+                    <h3 onclick="toggleSection(this)">Cercar de música</h3>
                     <div class="body">
                         <p><input type="text" name="search" id="search" placeholder="Cercar música"></p>
                         <div id="daw"><header></header></div>

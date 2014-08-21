@@ -64,7 +64,8 @@ var myAudioContext,
     value_hue = 0,
     value_saturation =  0,
     value_lightness = 0,
-    newSource = 0;
+    newSource = 0,
+    transparencia = 1;
 
 try {
     window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext;
@@ -356,7 +357,7 @@ function pauseSound() {
         SpectrumAnimationStop();
         VideoAnimationStop();
         source = mySource;
-        source.noteOff(0);
+        source.stop();
         document.getElementById("play").innerHTML  = "Play";
         document.getElementById("play").classList.remove("active");
         isPlaying = false;
@@ -477,6 +478,10 @@ function SpectrumAnimationStop() {
  * RESET TRACK
  * */
 function resetTrack(){
+    if(typeof source !== 'undefined'){
+        source.stop();
+        source.disconnect();
+    }
     pauseSound();
     document.getElementById("play").innerHTML  = "Play";
     document.getElementById("play").setAttribute('style','opacity:0.2');
@@ -524,7 +529,7 @@ function playVideo() {
                 context2,
                 centerY,
                 centerX,
-                "rgb(" + imageData.data[0] + ',' +  imageData.data[1]  + ',' +  imageData.data[2]  + ")",
+                "rgba(" + imageData.data[0] + ',' +  imageData.data[1]  + ',' +  imageData.data[2]  + ","+transparencia+")",
                 freqRadius
             );
         }
@@ -793,7 +798,9 @@ function definicioChange(e){
     canvas_width  = Math.round(width);
     canvas_height = Math.round(height);
 }
-
+function transparenciaChange(e){
+    transparencia = e.value;
+}
 
 /**
  * NAV BAR
