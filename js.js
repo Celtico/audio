@@ -373,30 +373,59 @@ function toggleSound() {
  *CONNECTORS AND FILTERS
  * */
 function routeSound(source) {
+
     myNodes.filter = myAudioContext.createBiquadFilter();
     myNodes.panner = myAudioContext.createPanner();
     myNodes.volume = myAudioContext.createGainNode();
+    myNodes.oscillator = myAudioContext.createOscillator();
+
     var panX = document.querySelector('#pan').value;
     var volume = document.querySelector('#volume').value;
-    myNodes.filter.type = "highpass";
-    myNodes.filter.frequency.value = 0;
-    myNodes.panner.setPosition(panX, 0, 0);
-    myNodes.volume.gain.value = volume;
+
+
     source.connect(myNodes.filter);
+
+
+    myNodes.filter.type = tipoPass[1];
+    myNodes.filter.frequency.value = 0;
     myNodes.filter.connect(myNodes.panner);
+
+    myNodes.oscillator.type = oscillatorPass[1];
+    myNodes.oscillator.frequency.value = 0;
+    myNodes.oscillator.connect(myNodes.filter);
+    myNodes.oscillator.start();
+
+
+    myNodes.panner.setPosition(panX, 0, 0);
     myNodes.panner.connect(myNodes.volume);
+
+
+    myNodes.volume.gain.value = volume;
     myNodes.volume.connect(myAudioAnalyser);
+
     return source;
 }
-function changeFrequency(element) {
+var tipoPass = ['lowpass', 'highpass', 'bandpass', 'lowshelf', 'highshelf', 'peaking', 'notch', 'allpass'];
+function passChange(e){
+    myNodes.filter.type = tipoPass[e.value];
+}
+
+var oscillatorPass = ['sine', 'square', 'sawtooth', 'triangle', 'custom'];
+function passOsChange(e){
+    myNodes.oscillator.type = oscillatorPass[e.value];
+}
+function frOsChange(e){
+    myNodes.oscillator.frequency.value = e.value;
+}
+function changeFrequency(e) {
     var minValue = 100;
     var maxValue = myAudioContext.sampleRate / 2;
     var numberOfOctaves = Math.log(maxValue / minValue) / Math.LN2;
-    var multiplier = Math.pow(2, numberOfOctaves * (element.value - 1.0));
+    var multiplier = Math.pow(2, numberOfOctaves * (e.value - 1.0));
     myNodes.filter.frequency.value = maxValue * multiplier;
 }
-function changeQuality(element) {
-    myNodes.filter.Q.value = element.value *  30;
+function changeQuality(e) {
+    myNodes.filter.Q.value = e.value *  30;
 }
 function sliderChange(slider) {
     if(typeof myNodes.volume !== 'undefined'){

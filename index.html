@@ -106,19 +106,19 @@
                         <canvas id="waveform" width="132" height="20"></canvas>
                         <div id="preload-in"></div>
                     </div>
-
                     <a id="play" onclick="toggleSound(this)">Play</a>
+
                 </div>
                 <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
+                <p>Canals<br><input id="pan" onchange="sliderChange(this)" type="range" min="-3" max="3" step="0.01" value="0" /></p>
                 <div class="section">
-                    <h3 onclick="toggleSection(this)">Cercar de música</h3>
+                    <h3 onclick="toggleSection(this)">Cercador música</h3>
                     <div class="body">
                         <p><input type="text" name="search" id="search" placeholder="Cercar música"></p>
                         <div id="daw"><header></header></div>
                         <div style="clear:both"></div>
                     </div>
                 </div>
-
                 <div class="section">
                     <h3 onclick="toggleSection(this)">Espectre</h3>
                     <div class="body">
@@ -126,25 +126,25 @@
                         <p id="velEsp">Velocitat<br><input id="vel_espectre" onchange="velSpectrumChange(this)" type="range" min="0" max="99" value="80" /></p>
                     </div>
                 </div>
-
-
-
-
                 <div class="section">
-                    <h3 onclick="toggleSection(this)">Filtres</h3>
+                    <h3 onclick="toggleSection(this)">Filtre Biquad</h3>
                     <div class="body">
-                        <p>Filtre Freqüència<br><input id="frequency" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" />
-                            <br><input id="quality" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" /></p>
-                        <p>Canals<br><input id="pan" onchange="sliderChange(this)" type="range" min="-3" max="3" step="0.01" value="0" /></p>
+                        <p>Freqüència<br><input id="frequency" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" /></p>
+                        <p>Qualitat<br><input id="quality" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" /></p>
+                        <p>Pass<br><input id="pass" onchange="passChange(this)" type="range" min="0" max="8" step="1" value="1" /></p>
                     </div>
                 </div>
-
-
+                <div class="section">
+                    <h3 onclick="toggleSection(this)">Fes la teva música</h3>
+                    <div class="body">
+                        <p>Pròximament</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <h3 onclick="toggleSection(this)">Més info</h3>
+            <h3 onclick="toggleSection(this)" style="background:#CCC">Més info</h3>
             <div class="body">
                 <p><a href="https://github.com/Celtico/audio">github</a></p>
                 <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Celtico&amp;repo=audio&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"
