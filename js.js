@@ -65,7 +65,8 @@ var myAudioContext,
     value_saturation =  0,
     value_lightness = 0,
     newSource = 0,
-    transparencia = 1;
+    transparencia = 1,
+    duplicar = 0;
 
 try {
     window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext;
@@ -533,13 +534,18 @@ function playVideo() {
                 freqRadius
             );
 
-            forms(
-                context2,
-                centerY * 10,
-                centerX * 10,
-                "rgba(" + imageData.data[0] + ',' +  imageData.data[1]  + ',' +  imageData.data[2]  + ","+transparencia+")",
-                freqRadius * 10
-            );
+
+            if(duplicar > 0){
+
+                forms(
+                    context2,
+                    centerY * duplicar,
+                    centerX * duplicar,
+                    "rgba(" + imageData.data[0] + ',' +  imageData.data[1]  + ',' +  imageData.data[2]  + ","+transparencia+")",
+                    freqRadius * duplicar
+                );
+            }
+
         }
     }
     if (!window.requestAnimationFrame){
@@ -808,6 +814,9 @@ function definicioChange(e){
 }
 function transparenciaChange(e){
     transparencia = e.value;
+}
+function duplicarChange(e){
+    duplicar = e.value;
 }
 
 /**
