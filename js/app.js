@@ -16,9 +16,8 @@ window.addEventListener('load', function() {
         runningDisplayContext = document.getElementById("wavedisplay").getContext("2d");
 
 
-        // leftTrack  = new p('https://api.soundcloud.com/tracks/102132606/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,true,'a');
-
-        leftTrack  = new p('https://api.soundcloud.com/tracks/140962704/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,false,'b');
+        leftTrack  = new p('https://api.soundcloud.com/tracks/102132606/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,true,'a');
+       // leftTrack  = new p('https://api.soundcloud.com/tracks/140962704/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,true,'a');
         rightTrack = new p('https://api.soundcloud.com/tracks/140962594/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,false,'b');
 
         tracks = document.getElementById( "pContent" );
