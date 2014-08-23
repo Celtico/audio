@@ -16,7 +16,7 @@ window.addEventListener('load', function() {
         runningDisplayContext = document.getElementById("wavedisplay").getContext("2d");
 
 
-       // leftTrack  = new p('https://api.soundcloud.com/tracks/102132606/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,true,'a');
+        // leftTrack  = new p('https://api.soundcloud.com/tracks/102132606/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,true,'a');
 
         leftTrack  = new p('https://api.soundcloud.com/tracks/140962704/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,false,'b');
         rightTrack = new p('https://api.soundcloud.com/tracks/140962594/stream'  + '?client_id=' + clientIdSoundCloudId_client_id,false,'b');
@@ -62,3 +62,13 @@ function updatePlatters(time) {
         tracks.children[i].p.updatePlatter( true );
     rafID = window.requestAnimationFrame( updatePlatters );
 }
+
+
+document.getElementById("close").addEventListener("click",function(){
+    document.getElementById("nav").setAttribute('style','display:none');
+    canvas2.setAttribute('style','margin-left:0; margin-top:0;');
+}, false);
+document.getElementById("open").addEventListener("click",function(){
+    document.getElementById("nav").setAttribute('style','display:block');
+    canvas2.setAttribute('style','margin-left:190px; margin-top: 17px;');
+}, false);
