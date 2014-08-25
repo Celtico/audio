@@ -77,11 +77,11 @@ $(".cue-b").click(function(){
 $(".cue-b.active").click(function(){});
 
 
-var pitchA = 0;
+var pitchA = 63;
 
 $(".pitchAmes").click(function(){
 
-    pitchA++;
+    pitchA = pitchA + 1;
 
     midiTest = {
         data:{
@@ -99,7 +99,7 @@ $(".pitchAmes").click(function(){
 
 $(".pitchAmenos").click(function(){
 
-    pitchA--;
+    pitchA = pitchA - 1;
 
     midiTest = {
         data:{
@@ -115,11 +115,11 @@ $(".pitchAmenos").click(function(){
 });
 
 
-var pitchB = 0;
+var pitchB = 63;
 
 $(".pitchBmes").click(function(){
 
-    pitchB++;
+    pitchB = pitchB + 1;
 
     midiTest = {
         data:{
@@ -135,7 +135,7 @@ $(".pitchBmes").click(function(){
 });
 $(".pitchBmenos").click(function(){
 
-    pitchB--;
+    pitchB = pitchB - 1;
 
     midiTest = {
         data:{
