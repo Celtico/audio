@@ -1,6 +1,6 @@
 
 
-var revTime = window.performance.now ?  (performance.now() + performance.timing.navigationStart) : Date.now();
+var revTime = Date.now();
 var midiTest = {
     data:{
         0: 191,
