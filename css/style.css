@@ -1,4 +1,4 @@
-.track {
+.pista {
   position: relative;
   width: 375px;
   display: inline-block;
@@ -6,21 +6,27 @@
   padding: 15px 30px 6px 30px;
   background: #f6f8ff;
 }
+.dragWindow {
+  background: #fff;
+  height: 15px;
+  cursor: move;
+}
 .ranger-track {
   position: relative;
-  width: 25%;
+  width: 38%;
   /* display: inline-block; */
   text-align: center;
   padding: 0;
   float: left;
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 .content-efectes {
   background: rgba(222, 225, 230, 0.9);
 }
 .crosFaders {
-  padding: 20px 0 20px 0;
+  background: rgba(0, 0, 0, 0.05);
+  /* border: solid 1px rgba(0, 0, 0, 0.12); */
+  margin: 2px 1px;
+  padding-top: 11px;
 }
 .midi {
   background: #fff;
@@ -39,7 +45,7 @@
 .aligner {
   width: 870px;
   left: 175px;
-  height: 452px;
+  height: 472px;
   text-align: center;
   font-size: 10px;
   font-weight: bold;
@@ -135,6 +141,7 @@
   line-height: 12px;
   margin: 0 0 0 10px;
   color: #fff;
+  padding: 6px 0;
 }
 .pitchBmenos,
 .pitchBmes {
