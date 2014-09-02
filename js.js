@@ -314,7 +314,7 @@ function drawBuffer(width, height, context, buffer ) {
     }
     setTimeout(function(){
         playSound();
-    },500);
+    },1500);
 }
 
 /**
