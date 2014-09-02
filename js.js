@@ -240,10 +240,9 @@ function getAudioList(val,init){
             $('<img src="' + (sound.artwork_url || sound.user.avatar_url) + '" data-url="'+ sound.stream_url +'">').addClass('sound').appendTo('#daw header');
         });
         if(init !== false){
-           // getSoundCloudId(sounds[0].stream_url);
             setTimeout(function(){
                 getSoundCloudId('https://api.soundcloud.com/tracks/59581315/stream');
-            },1000);
+            },500);
         }
     });
 }
@@ -313,8 +312,9 @@ function drawBuffer(width, height, context, buffer ) {
         }
         context.fillRect(i,(1+min)*amp,1,Math.max(1,(max-min)*amp));
     }
-
-    playSound();
+    setTimeout(function(){
+        playSound();
+    },500);
 }
 
 /**
