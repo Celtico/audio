@@ -5,286 +5,170 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <title>Video & Audio Stream & Spacial Effects</title>
-    <link href="css/style.css" media="all" rel="stylesheet" type="text/css">
+    <link href="style.css" media="all" rel="stylesheet" type="text/css">
+    <script src="webkitAudioContextMonkeyPatch.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://connect.soundcloud.com/sdk.js"></script>
+
 </head>
-<body id="body" style="background:#000">
+<body id="body">
+
+
 <div class="boto-open" id="open">
     <div></div>
 </div>
 <div id="nav">
-<div class="nav-bar">
-    <div class="boto-tancar" id="close">
-        <div></div>
-    </div>
+    <div class="nav-bar">
+        <div class="boto-tancar" id="close">
+            <div></div>
+        </div>
+
             <span class="full"  id="fullScreen">
                 <span class="full-in-1"></span>
                 <span class="full-in-2"></span>
                 <span class="full-in-3"></span>
                 <span class="full-in-4"></span>
             </span>
-    <div class="section">
-        <h3 onclick="toggleSection(this)">Imatge</h3>
-        <div class="body">
-            <p class="video">
-                <video autoplay id="videoElement"  width="132" height="70"></video>
-                <canvas id="canvasVideo"  width="132" height="105"></canvas>
-            </p>
-            <p class="btn-data">
-                <a id="webcam">
-                    Càmera
-                </a>
-                <a id="imatgeUp">
-                    <span class="icon-carpeta"></span>
-                    Imatge
-                </a>
-            </p>
-            <div style="clear:both"></div>
-            <div class="section">
-                <h3 onclick="toggleSection(this)">Dimensions</h3>
-                <div class="body">
-                    <p>Distància entre punts<br><input type="range" id="puns" name="rangeInput" min="10" max="100" value="30"></p>
-                    <p>Mida dels punts<br><input type="range" id="slider" name="rangeInput" min="0" max="100" value="20"></p>
-                    <p>Duplicar<br><input type="range" id="duplicar" onchange="duplicarChange(this)"  name="rangeInput" min="0" max="10"  step="0.01" value="0"></p>
-                    <p>Definició <span style="font-weight:bold; color:#ff1400; font-size:10px">amb precaució</span><br><input type="range" id="definicio"  onchange="definicioChange(this)"  name="definicio" min="10" max="100" value="50"></p>
-                </div>
-            </div>
-            <div class="section">
-                <h3 onclick="toggleSection(this)">Colors</h3>
-                <div class="body">
-                    <p>Contrast i brillo<br><input type="range" id="brillo" name="rangeInput" min="-100" max="100" value="0"></p>
-                    <p>Tono<br><input type="range" onchange="hueChange(this)"  name="rangeInput" min="-180" max="180" value="0"></p>
-                    <p>Saturació<br><input type="range" onchange="saturationChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
-                    <p>Llum<br><input type="range" onchange="lightnessChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
-                    <p>Transparència<br><input type="range" onchange="transparenciaChange(this)"  min="0" max="1" step="0.01" value="1"></p>
-                    <p>Color de fons b/n<br><input type="range" id="fons" name="rangeInput" min="0" max="99" value="99"></p>
-                </div>
-            </div>
-            <div class="section">
-                <h3 onclick="toggleSection(this)">Formes</h3>
-                <div class="body">
-                    <p>Canvia de forma<br><input type="range"  onchange="formaChange(this)" name="froma" min="1" max="20" value="1"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="section">
-        <h3 onclick="toggleSection(this)">Àudio</h3>
-        <div class="body">
-            <p style="margin:0; padding:0">
-                <canvas id="waveCanvas"  width="132" height="105"></canvas>
-            </p>
-            <p class="btn-data">
-                <a id="micro">
-                    Micròfon
-                </a>
-                <a id="audio" class="active">
-                    <span class="icon-carpeta"></span>
-                    Àudio
-                </a>
-            </p>
-            <div style="clear:both"></div>
 
-            <div style="margin-top:4px; padding-top:0" class="currentTime">
-                <div id="preload">
-                    <canvas id="waveform" width="132" height="20"></canvas>
-                    <div id="preload-in"></div>
-                </div>
-                <a id="play" onclick="toggleSound(this)">Play</a>
-            </div>
-            <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="1" /></p>
-
-
-            <div class="section">
-                <h3 onclick="toggleSection(this)">DJ</h3>
-                <div class="body">
-
-
-
-                    <!-- DJ -->
-                    <div class="aligner"  draggable="true">
-                        <div class="dragWindow">
-
-                        </div>
-                        <div class="wavedisplay">
-                            <canvas id="wavedisplay" width="856" height="50"></canvas>
-                        </div>
-                        <div id="pContent"></div>
-
-                        <div class="content-efectes">
+        <div class="section">
+            <h3 onclick="toggleSection(this)">Imatge</h3>
+            <div class="body">
 
 
 
 
-                            <div class="ranger-track" style="padding: 14px 0 0 0;">
-                                <a class="pitchAmes">+</a>
-                                <a class="pitchAmenos">-</a>
-                                <input type="text" data-width="155" data-height="155" value=""   data-displayInput="false"  class="infinite shuttleA"  data-cursor=true data-thickness="0.7" data-fgColor="#EEE" data-bgColor="#FFFFFF" >
-                                <input type="text" data-width="55" data-height="55" value="63.5"  data-displayInput="false"  class="filterA" data-angleOffset=-125 data-angleArc=250  data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF" data-min="-63.5" data-max="63.5">
-                            </div>
-                            <div class="ranger-track" style="width: 12%;">
-                                <div class="crosFaders">
-
-
-
-                                    <input type="text" data-width="55" data-height="55" value="63.5" data-displayInput="false"  class="highA"  data-angleOffset=-125 data-angleArc=250  data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF"  data-min="-63.5" data-max="63.5">
-                                    <input type="text" data-width="55" data-height="55" value="63.5" data-displayInput="false"  class="midA"   data-angleOffset=-125 data-angleArc=250  data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF"   data-min="-63.5" data-max="63.5">
-                                    <input type="text" data-width="55" data-height="55" value="63.5" data-displayInput="false" class="lowA"   data-angleOffset=-125 data-angleArc=250  data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF"   data-min="-63.5" data-max="63.5">
-
-
-
-                                </div>
-                            </div>
-                            <div class="ranger-track" style="width: 12%;">
-                                <div class="crosFaders">
-
-                                    <input type="text" data-width="55" data-height="55" value="63.5" data-displayInput="false" class="highB"  data-angleOffset=-125 data-angleArc=250   data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF"  data-min="-63.5" data-max="63.5">
-                                    <input type="text" data-width="55" data-height="55" value="63.5" data-displayInput="false" class="midB" data-angleOffset=-125 data-angleArc=250  data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF"  data-min="-63.5" data-max="63.5">
-                                    <input type="text" data-width="55" data-height="55" value="63.5" data-displayInput="false"  class="lowB"  data-angleOffset=-125 data-angleArc=250  data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF" data-min="-63.5" data-max="63.5">
-
-
-
-
-                                </div>
-                            </div>
-                            <div class="ranger-track" style="padding: 14px 0 0 0;">
-                                <input type="text" data-width="55" data-height="55" value="63.5" data-displayInput="false"  class="filterB" data-angleOffset=-125 data-angleArc=250  data-thickness="0.5" data-fgColor="#000" data-bgColor="#FFFFFF" data-min="-63.5" data-max="63.5">
-                                <input type="text" data-width="155" data-height="155"  value=""  data-displayInput="false"   class="infinite shuttleB"   data-cursor=true data-thickness="0.7" data-fgColor="#EEE" data-bgColor="#FFFFFF">
-                                <a class="pitchBmes">+</a>
-                                <a class="pitchBmenos">-</a>
-                            </div>
-
-
-
-
-                            <div style="clear:both"></div>
-
-                        </div>
-
-                        <div class="xfader-in">
-                            <input id="xfader" class="xfade" type="range" min="0.0" max="1.0" step="0.01" value="0.5" oninput="crossfade(event.target.value)">
-                        </div>
-                        <div class="midi">MIDI Input: <select id=midiIn onchange='changeMidiIn();'>
-                                <option value="">Not connected</option>
-                            </select>
-                            MIDI Output:
-                            <select id=midiOut onchange='changeMidiOut();'>
-                                <option value="">Not connected</option>
-                            </select>
+                    <p class="video">
+                        <video autoplay id="videoElement"  width="132" height="70"></video>
+                        <canvas id="canvasVideo"  width="132" height="105"></canvas>
+                    </p>
+                    <p class="btn-data">
+                        <a id="webcam">
+                            Càmera
+                        </a>
+                        <a id="imatgeUp">
+                            <span class="icon-carpeta"></span>
+                            Imatge
+                        </a>
+                    </p>
+                    <div style="clear:both"></div>
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Dimensions</h3>
+                        <div class="body">
+                            <p>Distància entre punts<br><input type="range" id="puns" name="rangeInput" min="10" max="100" value="30"></p>
+                            <p>Mida dels punts<br><input type="range" id="slider" name="rangeInput" min="0" max="100" value="20"></p>
+                            <p>Definició <span style="font-weight:bold; color:#ff1400; font-size:10px">amb precaució</span><br><input type="range" id="definicio"  onchange="definicioChange(this)"  name="definicio" min="1" max="100" value="50"></p>
                         </div>
                     </div>
-                    <!-- DJ // -->
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Colors</h3>
+                        <div class="body">
+                            <p>Contrast i brillo<br><input type="range" id="brillo" name="rangeInput" min="-100" max="100" value="0"></p>
+                            <p>Tono<br><input type="range" onchange="hueChange(this)"  name="rangeInput" min="-180" max="180" value="0"></p>
+                            <p>Saturació<br><input type="range" onchange="saturationChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
+                            <p>Llum<br><input type="range" onchange="lightnessChange(this)"  name="rangeInput" min="-100" max="100" value="0"></p>
+                            <p>Transparència<br><input type="range" onchange="transparenciaChange(this)"  min="0" max="1" step="0.01" value="1"></p>
+                            <p>Color de fons b/n<br><input type="range" id="fons" name="rangeInput" min="0" max="99" value="0"></p>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Formes</h3>
+                        <div class="body">
+                            <p>Canvia de forma<br><input type="range"  onchange="formaChange(this)" name="froma" min="1" max="20" value="1"></p>
+                        </div>
+                    </div>
 
-
-                </div>
             </div>
+        </div>
+
+        <div class="section">
+            <h3 onclick="toggleSection(this)">Àudio</h3>
+            <div class="body">
 
 
-            <div class="section">
-                <h3 onclick="toggleSection(this)">Cercador música</h3>
-                <div class="body">
-                    <p><input type="text" name="search" id="search" placeholder="Cercar música"></p>
-                    <div id="daw"><header></header></div>
+
+
+                        <p style="margin:0; padding:0">
+                        <canvas id="waveCanvas"  width="132" height="105"></canvas>
+                    </p>
+                    <p class="btn-data">
+                        <a id="micro">
+                            Micròfon
+                        </a>
+                        <a id="audio" class="active">
+                            <span class="icon-carpeta"></span>
+                            Àudio
+                        </a>
+                    </p>
                     <div style="clear:both"></div>
-                </div>
+                    <div style="margin-top:4px; padding-top:0" class="currentTime">
+                        <div id="preload">
+                            <canvas id="waveform" width="132" height="20"></canvas>
+                            <div id="preload-in"></div>
+                       </div>
+
+                        <a id="play" onclick="toggleSound(this)">Play</a>
+                    </div>
+                    <p>Volum<br><input id="volume" onchange="sliderChange(this)" type="range" min="0" max="1" step="0.01" value="0.5" /></p>
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Cercar de música</h3>
+                        <div class="body">
+                            <p><input type="text" name="search" id="search" placeholder="Cercar música"></p>
+                            <div id="daw"><header></header></div>
+                            <div style="clear:both"></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Espectre</h3>
+                        <div class="body">
+                            <p>Tipo<br><input id="espectre" onchange="spectrumChange()" type="range" min="0" max="1" step="1" value="0" /></p>
+                            <p id="velEsp">Velocitat<br><input id="vel_espectre" onchange="velSpectrumChange(this)" type="range" min="0" max="99" value="80" /></p>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Filtres</h3>
+                        <div class="body">
+                            <p>Filtre Freqüència<br><input id="frequency" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" />
+                                <br><input id="quality" onchange="sliderChange(this)" type="range"  min="0" max="1" step="0.01" value="0" /></p>
+                            <p>Canals<br><input id="pan" onchange="sliderChange(this)" type="range" min="-3" max="3" step="0.01" value="0" /></p>
+                        </div>
+                    </div>
+
+
             </div>
-            <div class="section">
-                <h3 onclick="toggleSection(this)">Espectre</h3>
-                <div class="body">
-                    <p>Tipo<br><input id="espectre" onchange="spectrumChange()" type="range" min="0" max="1" step="1" value="0" /></p>
-                    <p id="velEsp">Velocitat<br><input id="vel_espectre" onchange="velSpectrumChange(this)" type="range" min="0" max="99" value="80" /></p>
-                </div>
+        </div>
+
+        <div class="section">
+            <h3 onclick="toggleSection(this)">Més info</h3>
+            <div class="body">
+                <p><a href="https://github.com/Celtico/audio">github</a></p>
+                <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Celtico&amp;repo=audio&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"
+                        allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe><br>
+                <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Celtico&amp;repo=audio&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"
+                        allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe><br>
+                <iframe   src="http://ghbtns.com/github-btn.html?user=Celtico&repo=audio&count=true&type=follow"
+                          allowtransparency="true" frameborder="0" scrolling="0" width="130" height="20"></iframe>
             </div>
         </div>
     </div>
-    <div class="section">
-        <h3 onclick="toggleSection(this)" style="background:#CCC">Més info</h3>
-        <div class="body">
-            <p><a href="https://github.com/Celtico/audio">github</a></p>
-            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Celtico&amp;repo=audio&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"
-                    allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe><br>
-            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Celtico&amp;repo=audio&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"
-                    allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe><br>
-            <iframe   src="http://ghbtns.com/github-btn.html?user=Celtico&repo=audio&count=true&type=follow"
-                      allowtransparency="true" frameborder="0" scrolling="0" width="130" height="20"></iframe>
-        </div>
+    <div style="display:none">
+        <input type="file" id="file" name="file" />
+        <input type="file" id="file_audio" name="audio" accept="audio/*;capture=microphone" />
+        <canvas id="canvas" width="25" height="19"></canvas>
+        <img id="img" src="test.jpg" width="3264" height="1832">
     </div>
+    <div class="nav-bar-bg"></div>
 </div>
 
-<div style="display:none">
-    <input type="file" id="file" name="file" />
-    <input type="file" id="file_audio" name="audio" accept="audio/*;capture=microphone" />
-    <canvas id="canvas" width="25" height="19"></canvas>
-    <img id="img" src="img/test.jpg">
-</div>
-
-
-<div class="nav-bar-bg"></div>
-</div>
 <div class="canvas-con" id="canvas-con">
     <canvas id="canvas2"  width="3400" height="2400"></canvas>
 </div>
 
-
-
-
-<!-- Midi - Jquey - Cue - Patch - SoundCloud - WebMidiApi -->
-
-<script src="http://connect.soundcloud.com/sdk.js"></script>
-<script src='http://cwilso.github.com/WebMIDIAPIShim/WebMIDIAPI.js'></script>
-<script src="js/webkitAudioContextMonkeyPatch.js"></script>
-<script src="js/cue.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.knob.min.js"></script>
-<script src="js/dragWindow.js"></script>
-
-
-
-<!-- MIdi -->
-<script src="js/midi.js"></script>
-<script src="js/manual.js"></script>
-
-
-
-<!-- Globals -->
-<script src="js/mediaAudio.js"></script>
-
-<!-- Nav -->
-<script src="js/varGlobals.js"></script>
-
-
-<!-- Pista -->
-<script src="js/pista.js"></script>
-<script src="js/pistaAudioBuffer.js"></script>
-<script src="js/pistaTogglePlaybackSpinUpDown.js"></script>
-<script src="js/pistaChangeGain.js"></script>
-<script src="js/pistaChagePlayBackRate.js"></script>
-<script src="js/pistaReverseBuffer.js"></script>
-<script src="js/pistaTogglePlayBack.js"></script>
-<script src="js/pistaUpdatePlatter.js"></script>
-<script src="js/pistaUpdataTime.js"></script>
-<script src="js/pistaCuePointAtCurrentTime.js"></script>
-<script src="js/pistaClearCuePoint.js"></script>
-<script src="js/pistaJumpToCuePoint.js"></script>
-<script src="js/pistaJumpToPoint.js"></script>
-<script src="js/pistaPlaySnippet.js"></script>
-<script src="js/pistaSkip.js"></script>
-<script src="js/pistaShutDownNodeWhenDonePlaying.js"></script>
-<script src="js/pistaDrawRunningDisplay.js"></script>
-<script src="js/pistaCreateRunningDisplayCache.js"></script>
-<script src="js/pistaUtils.js"></script>
-
-<!-- Media -->
-<script src="js/media.js"></script>
-<script src="js/mediaAudio.js"></script>
-<script src="js/mediaImage.js"></script>
-<script src="js/mediaDrawSpectrum.js"></script>
-<script src="js/mediaPlayVideo.js"></script>
-<script src="js/mediaImageEffects.js"></script>
-<script src="js/mediaToggleFullScreen.js"></script>
-<script src="js/beatdetektor.js"></script>
-
-<!-- App -->
-<script src="js/app.js"></script>
+<script src="js.js"></script>
 
 
 
