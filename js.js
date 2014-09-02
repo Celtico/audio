@@ -242,7 +242,7 @@ function getAudioList(val,init){
         if(init !== false){
             setTimeout(function(){
                 getSoundCloudId('https://api.soundcloud.com/tracks/59581315/stream');
-            },500);
+            },1500);
         }
     });
 }
