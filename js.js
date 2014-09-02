@@ -230,7 +230,10 @@ function getSoundCloudId(track) {
     preLoader(request);
 }
 $('#search').keyup(function(ev) {  getAudioList($(this).val(),false);  return false; });
-$(document).on('click','#daw img',function(){ getSoundCloudId($(this).data('url')); });
+$(document).on('click','#daw img',function(){
+    getSoundCloudId($(this).data('url'));
+    window.scrollTo(1500,0);
+});
 function getAudioList(val,init){
     $.getJSON('http://api.soundcloud.com/tracks.json', {
         q: val, limit: 20, duration:'medium',  track_type:'original',client_id: 'f240950ceb38d793cf52508943c8dc3f'
@@ -323,7 +326,7 @@ function drawBuffer(width, height, context, buffer ) {
  * */
    var currentTimeX = 0;
  function playSound() {
-    console.log('play');
+
      if( myBuffers != ''){
      currentTimeX = myAudioContext.currentTime;
     myAudioAnalyser = myAudioContext.createAnalyser();
