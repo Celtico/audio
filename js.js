@@ -233,14 +233,17 @@ $('#search').keyup(function(ev) {  getAudioList($(this).val(),false);  return fa
 $(document).on('click','#daw img',function(){ getSoundCloudId($(this).data('url')); });
 function getAudioList(val,init){
     $.getJSON('http://api.soundcloud.com/tracks.json', {
-        q: val, limit: 10, order: 'hotness', downloadable:true, client_id: 'f240950ceb38d793cf52508943c8dc3f'
+        q: val, limit: 20, duration:'medium',  track_type:'original',client_id: 'f240950ceb38d793cf52508943c8dc3f'
     }).done(function(sounds) {
         $('.sound').remove();
         sounds.forEach(function(sound) {
             $('<img src="' + (sound.artwork_url || sound.user.avatar_url) + '" data-url="'+ sound.stream_url +'">').addClass('sound').appendTo('#daw header');
         });
         if(init !== false){
-            getSoundCloudId(sounds[0].stream_url);
+           // getSoundCloudId(sounds[0].stream_url);
+            setTimeout(function(){
+                getSoundCloudId('https://api.soundcloud.com/tracks/59581315/stream');
+            },1000);
         }
     });
 }
@@ -310,6 +313,8 @@ function drawBuffer(width, height, context, buffer ) {
         }
         context.fillRect(i,(1+min)*amp,1,Math.max(1,(max-min)*amp));
     }
+
+    playSound();
 }
 
 /**
@@ -318,12 +323,9 @@ function drawBuffer(width, height, context, buffer ) {
  * */
    var currentTimeX = 0;
  function playSound() {
-
+    console.log('play');
      if( myBuffers != ''){
-
-
      currentTimeX = myAudioContext.currentTime;
-
     myAudioAnalyser = myAudioContext.createAnalyser();
     myAudioAnalyser.smoothingTimeConstant = vel_espect;
     myAudioAnalyser.fftSize = 2048;
@@ -356,8 +358,8 @@ function pauseSound() {
     if(typeof mySource !== 'undefined'){
         SpectrumAnimationStop();
         VideoAnimationStop();
+        mySource.stop(0);
         source = mySource;
-        source.stop();
         document.getElementById("play").innerHTML  = "Play";
         document.getElementById("play").classList.remove("active");
         isPlaying = false;
@@ -478,10 +480,6 @@ function SpectrumAnimationStop() {
  * RESET TRACK
  * */
 function resetTrack(){
-    if(typeof source !== 'undefined'){
-        source.stop();
-        source.disconnect();
-    }
     pauseSound();
     document.getElementById("play").innerHTML  = "Play";
     document.getElementById("play").setAttribute('style','opacity:0.2');
