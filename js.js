@@ -242,7 +242,7 @@ function getAudioList(val,init){
         if(init !== false){
             setTimeout(function(){
                 getSoundCloudId('https://api.soundcloud.com/tracks/59581315/stream');
-            },1500);
+            },1000);
         }
     });
 }
@@ -312,9 +312,9 @@ function drawBuffer(width, height, context, buffer ) {
         }
         context.fillRect(i,(1+min)*amp,1,Math.max(1,(max-min)*amp));
     }
-    setTimeout(function(){
-        playSound();
-    },1500);
+
+    playSound();
+
 }
 
 /**
