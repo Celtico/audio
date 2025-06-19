@@ -64,7 +64,8 @@ var myAudioContext,
   value_lightness = 0,
   newSource = 0,
   mp3 = "MakeYourMoveFt.Goapele.mp3",
-  transparencia = 1;
+  transparencia = 1,
+  isUnlocked = false;
 
 try {
   window.AudioContext =
