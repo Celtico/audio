@@ -73,6 +73,7 @@ try {
     window.oAudioContext ||
     window.msAudioContext;
   myAudioContext = new AudioContext();
+  getAudioList("reggae", true);
 } catch (e) {
   alert("Este navegador no soporta la API de audio");
 }
@@ -253,12 +254,35 @@ function getSoundCloudId(track) {
   request.send();
   preLoader(request);
 }
-
+$("#search").keyup(function (ev) {
+  getAudioList($(this).val(), false);
+  return false;
+});
 $(document).on("click", "#daw img", function () {
   getSoundCloudId($(this).data("url"));
   window.scrollTo(1500, 0);
 });
-
+function getAudioList(val, init) {
+  $.getJSON("https://api.soundcloud.com/tracks?q=hello&ids=1%2C2%2C3&urns=soundcloud%3Atracks%3A1%2Csoundcloud%3Atracks%3A2%2Csoundcloud%3Atracks%3A3&genres=Pop%2CHouse&tags=test&bpm%5Bfrom%5D=123&bpm%5Bto%5D=456&duration%5Bfrom%5D=123456&duration%5Bto%5D=456789&created_at%5Bfrom%5D=2020-12-24%2000%3A00%3A00&created_at%5Bto%5D=2020-12-26%2000%3A00%3A00&access=playable%2Cpreview&limit=2&offset=0&linked_partitioning=true").done(function (sounds) {
+    $(".sound").remove();
+    sounds.forEach(function (sound) {
+      $(
+        '<img src="' +
+          (sound.artwork_url || sound.user.avatar_url) +
+          '" data-url="' +
+          sound.stream_url +
+          '">'
+      )
+        .addClass("sound")
+        .appendTo("#daw header");
+    });
+    if (init !== false) {
+      setTimeout(function () {
+        getSoundCloudId("//api.soundcloud.com/tracks/59581315/stream");
+      }, 1000);
+    }
+  });
+}
 /**
  * AUDIO
  * PRELOADER
